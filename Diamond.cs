@@ -10,28 +10,50 @@ public static class Diamond
     public static string Make(char target)
     {
         _target = target;
-        _lineSize = alphabet.IndexOf(_target) + 2;
 
-        return _target == 'A'
-                    ? target.ToString()
-                    : $"{alphabet[0]}\n{MakeLines(1, 1)}{alphabet[0]}";
+        if (_target.Equals('A'))
+        {
+            return _target.ToString();
+        }
+        else
+        {
+            var lines = MakeLines(1, 1);
+
+            var edgeLine = alphabet[0].ToString();
+            var spaces = _lineSize - edgeLine.Length;
+            while (spaces > 0)
+            {
+                edgeLine = " " + edgeLine + " "; 
+                spaces -= 2;
+            }
+
+            return edgeLine + '\n' + lines + edgeLine;    
+        }
     }
 
     private static string MakeLines(int index, int numMiddleSpaces)
     {
-        var line1 = alphabet[index].ToString();
-        line1 = line1.PadRight(numMiddleSpaces + 1, ' ');
-        line1 += alphabet[index].ToString() + '\n';
+        var line = alphabet[index].ToString();
+        line = line.PadRight(numMiddleSpaces + 1, ' ');
+        line += alphabet[index].ToString();
 
         if (alphabet[index].Equals(_target))
-            return line1;
+        {
+            _lineSize = line.Length;
+            return line + '\n';
+        }
 
-        line1 += MakeLines(index+1, numMiddleSpaces+2);
+        var middle = MakeLines(index+1, numMiddleSpaces+2);
 
-        var line2 = alphabet[index].ToString();
-        line2 = line2.PadRight(numMiddleSpaces + 1, ' ');
-        line2 += alphabet[index].ToString() + '\n';
+        var spaces = _lineSize - line.Length;
+        while (spaces > 0)
+        {
+            line = " " + line + " "; 
+            spaces -= 2;
+        }
 
-        return line1 + line2;
+        line += '\n';
+
+        return line + middle + line;
     }
 }
