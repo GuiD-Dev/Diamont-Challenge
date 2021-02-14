@@ -23,11 +23,11 @@ public static class Diamond
             var spaces = _lineSize - edgeLine.Length;
             while (spaces > 0)
             {
-                edgeLine = " " + edgeLine + " "; 
+                edgeLine = $" {edgeLine} "; 
                 spaces -= 2;
             }
 
-            return edgeLine + '\n' + lines + edgeLine;    
+            return $"{edgeLine}\n{lines}{edgeLine}";    
         }
     }
 
@@ -40,7 +40,7 @@ public static class Diamond
         if (alphabet[index].Equals(_target))
         {
             _lineSize = line.Length;
-            return line + '\n';
+            return $"{line}\n";
         }
 
         var middle = MakeLines(index+1, numMiddleSpaces+2);
@@ -48,7 +48,7 @@ public static class Diamond
         var spaces = _lineSize - line.Length;
         while (spaces > 0)
         {
-            line = " " + line + " "; 
+            line = $" {line} "; 
             spaces -= 2;
         }
 
